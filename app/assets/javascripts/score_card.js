@@ -91,7 +91,7 @@ $(document).ready(function() {
       if(map[$(toss).val()] == 3 && index % 2 == 0 && frame != 10) {
         index++;
       }
-      else if(index == 19 && (map[$(toss).val()] == 1 || map[$(toss).val()] == 0)) {
+      else if(index == 19 && (map[$(toss).val()] == 1 || map[$(toss).val()] == 0) && (map[$(tosses.eq(18)).val()] != 3)) {
         return;
       }
       index++;
@@ -245,7 +245,11 @@ $(document).ready(function() {
     },
     value: function() {
       if(this.isStrike()) {
-        return 3 + this.sumTosses(this.futureTosses(2));
+        nextTwoTosses = this.futureTosses(2)
+        if (nextTwoTosses[0] == 1 && nextTwoTosses[1] == 3) {
+          return 6
+        }
+        return 3 + this.sumTosses(nextTwoTosses);
       }
       else if(this.isSpare() && this.frame != 10) {
         return 3 + this.sumTosses(this.futureTosses(1));
